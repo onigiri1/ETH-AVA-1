@@ -1,0 +1,25 @@
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract tests {
+
+    uint public TotalETH;
+    mapping(address => uint) public balance;
+
+    function addBalance(address _owner, uint _ETH) public {
+        require( _ETH >= 1, "a minimum of 1 ETH required to transact.");
+        balance[_owner] += _ETH;
+        TotalETH += _ETH;
+        assert(balance[_owner] == TotalETH);
+    }
+
+    function minusBalance(address _owner, uint _ETH) public {
+        if(balance[_owner] < _ETH){
+            revert("not enough balance to transact");
+        }
+        balance[_owner] -= _ETH;
+        TotalETH -= _ETH;
+        assert(balance[_owner] == TotalETH);
+    }
+    
+}
